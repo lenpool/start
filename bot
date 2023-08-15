@@ -1,0 +1,28 @@
+from telebot import TeleBot
+
+# Create the bot
+bot = TeleBot('YOUR_BOT_TOKEN')
+
+# Handler for the /start command
+@bot.message_handler(commands=['start'])
+def start(message):
+    # Send a welcome message
+    bot.send_message(message.chat.id, 'Hello! I am a Telegram bot with notifications.')
+
+# Handler for the /notify command
+@bot.message_handler(commands=['notify'])
+def notify(message):
+    # Prompt the user to enter the notification text
+    msg = bot.send_message(message.chat.id, 'Enter the notification text:')
+    # Set the next step to handle the entered text
+    bot.register_next_step_handler(msg, process_notification)
+
+# Handle the entered text for notification
+def process_notification(message):
+    # Send the notification to all users of the bot
+    users = get_all_users()  # Function to get all users
+    for user_id in users:
+        bot.send_message(user_id, message.text)
+
+# Start the bot
+bot.polling()
