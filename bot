@@ -1,6 +1,6 @@
 from telebot import TeleBot
 
-# Create the bot
+# Create the bot.
 bot = TeleBot('YOUR_BOT_TOKEN')
 
 # Handler for the /start command
